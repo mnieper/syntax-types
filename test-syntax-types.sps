@@ -32,3 +32,11 @@
 (frob-case x
   [(e ...) (assert (equal? (list e ...) '(1 2 3)))]
   [else (assert #f)])
+
+(with-syntax ([(a ...) #'(6 7 8)])
+  (frob-case x
+    [(e ...) (assert (equal? (length #'(a (... ...))) 3))]
+    [else (assert #f)]))
+
+(with-frob ([(x ...) foo #'(#f)] [(y ...) bar #'(#f)])
+  (assert (equal? (list (list x ...) (list y ...)) '((1 2 3) (#f)))))
